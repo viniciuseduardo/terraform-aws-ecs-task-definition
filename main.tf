@@ -68,6 +68,10 @@ resource "aws_ecs_task_definition" "task_definition" {
   network_mode          = var.network_mode
   task_role_arn         = data.aws_iam_role.task.arn
   execution_role_arn    = var.execution_role != null ? data.aws_iam_role.execution[0].arn : null
+  
+  requires_compatibilities = [
+    var.launch_type
+  ]
 
   dynamic "volume" {
     for_each = var.volumes
